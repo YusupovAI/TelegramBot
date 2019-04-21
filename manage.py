@@ -5,11 +5,10 @@ from config import bot_token
 
 import telebot
 
-TOKEN = bot_token
 server = Flask(__name__)
 
 
-@server.route('/' + TOKEN, methods=['POST'])
+@server.route('/' + bot_token, methods=['POST'])
 def getMessage():
     bot.process_new_updates(
         [telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
@@ -20,7 +19,7 @@ def getMessage():
 def webhook():
     bot.remove_webhook()
     bot.set_webhook(
-        url='https://python-review-test-bot.herokuapp.com/' + TOKEN)
+        url='https://python-review-test-bot.herokuapp.com/' + bot_token)
     return "!", 200
 
 
