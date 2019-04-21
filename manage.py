@@ -1,5 +1,5 @@
 import os
-from app import bot, init_bot
+from app import bot
 from flask import Flask, request
 from config import bot_token
 
