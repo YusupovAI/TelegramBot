@@ -9,16 +9,17 @@ server = Flask(__name__)
 
 
 @server.route('/' + bot_token, methods=['POST'])
-def getMessage():
+def get_message():
     bot.process_new_updates(
         [telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
 
 @server.route("/")
-def webhook():
+def web_hook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://your_heroku_project.com/' + bot_token)
+    bot.set_webhook(
+        url='https://python-review-test-bot.herokuapp.com/' + bot_token)
     return "!", 200
 
 
