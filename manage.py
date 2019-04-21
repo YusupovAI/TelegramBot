@@ -3,7 +3,6 @@ import os
 from flask import Flask, request
 import telebot
 
-port = int(os.environ.get('PORT', '8443'))
 bot = telebot.TeleBot(bot_token)
 server = Flask(__name__)
 
@@ -19,7 +18,7 @@ def get_message():
 def web_hook():
     bot.remove_webhook()
     bot.set_webhook(
-        url='https://python-review-test-bot.herokuapp.com/' + bot_token)
+        url='https://python-review-test-bot.herokuapp.com')
     return "!", 200
 
 
