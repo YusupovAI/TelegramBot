@@ -1,11 +1,4 @@
 import telebot
+from config import bot_token
 
-bot = None
-
-
-def init_bot(token):
-    global bot
-
-    bot = telebot.TeleBot(token)
-
-    from app import handlers
+bot = telebot.TeleBot(bot_token)
