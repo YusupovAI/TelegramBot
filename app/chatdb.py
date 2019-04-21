@@ -18,7 +18,7 @@ def get_article_for_user(chat_id):
     with shelve.open(shelve_name) as storage:
         try:
             answer = storage[str(chat_id)][storage[str(chat_id) + '_cnt']]
-            storage[str(chat_id) + '_cnt'] -= 1
+            storage[str(chat_id) + '_cnt'] += 1
             return answer
         except Exception:
             return None
