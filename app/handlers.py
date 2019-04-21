@@ -1,10 +1,11 @@
 import os
 
 from flask import Flask, request
+from config import bot_token
 
 import telebot
 
-TOKEN = '<api_token>'
+TOKEN = bot_token
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
@@ -21,14 +22,16 @@ def echo_message(message):
 
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    bot.process_new_updates(
+        [telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
 
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://your_heroku_project.com/' + TOKEN)
+    bot.set_webhook(
+        url='https://python-review-test-bot.herokuapp.com/' + TOKEN)
     return "!", 200
 
 
