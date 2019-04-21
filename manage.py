@@ -2,10 +2,9 @@ from config import bot_token
 import os
 from flask import Flask, request
 import telebot
-from app import bot, init_bot
 
 port = int(os.environ.get('PORT', '8443'))
-init_bot(bot_token)
+bot = telebot.TeleBot(bot_token)
 server = Flask(__name__)
 
 
