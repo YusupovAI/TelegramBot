@@ -1,1 +1,1 @@
-app: python manage.py
+bot: python manage.py
