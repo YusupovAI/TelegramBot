@@ -2,7 +2,6 @@ from app import bot, chatdb
 import requests
 import telebot
 import config
-from app import chatdb
 
 
 @bot.message_handler(commands=['start'])
