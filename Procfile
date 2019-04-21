@@ -1,1 +1,1 @@
-web: gunicron manage.py
+web: python manage.py
