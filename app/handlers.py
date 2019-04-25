@@ -70,8 +70,8 @@ def handle_search(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     if call.data == 'next':
-        bot.answer_callback_query(call.id)
         next_article(call.message.chat.id)
+        bot.answer_callback_query(call.id)
     elif call.data == 'get':
         bot.answer_callback_query(call.id)
         bot.send_message(call.message.chat.id,
