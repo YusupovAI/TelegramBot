@@ -78,4 +78,3 @@ def callback_worker(call):
                          '{urls}'.format(
                              urls='\n'.join(
                                  chatdb.get_last_urls(call.message.chat.id))))
-        chatdb.del_user_articles(call.message.chat.id)
