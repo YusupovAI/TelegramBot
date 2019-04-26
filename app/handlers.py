@@ -8,7 +8,7 @@ import config
 def handle_start(message):
     bot.send_message(message.chat.id,
                      'Hello! I am a bot for searching science articles. '
-                     'Just use /search command to begin')
+                     'Just use /search <query> command to begin')
 
 
 def get_articles(response):
