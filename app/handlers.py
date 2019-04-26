@@ -11,7 +11,7 @@ def handle_start(message):
                      'Just use /search <query> command to begin')
 
 
-def get_articles(response):
+async def get_articles(response):
     l = []
     for publication in response.json()['data']:
         source = publication['_source']
@@ -24,7 +24,7 @@ def get_articles(response):
     return l
 
 
-def formulate_text(article):
+async def formulate_text(article):
     return '''Title: {title}
     
 authors: {authors}
@@ -34,7 +34,7 @@ date: {date}'''.format(title=article['title'],
                        date=article['date'])
 
 
-def create_keyboard():
+async def create_keyboard():
     keyboard = telebot.types.InlineKeyboardMarkup()
     key_next = telebot.types.InlineKeyboardButton('Next',
                                                   callback_data='next')
