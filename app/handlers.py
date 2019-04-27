@@ -56,6 +56,7 @@ def next_article(chat_id):
 
 @bot.message_handler(commands=['search'])
 def handle_search(message):
+    chatdb.del_user_articles(message.chat.id)
     query = ' '.join(message.text.split()[1:])
     response = requests.get(config.search_url.format(query=query),
                             params=config.params)
