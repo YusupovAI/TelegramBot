@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 
-engine = create_engine('postgres:///users.db', echo=True, )
+engine = create_engine('sqlite:///users.db', echo=True, )
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 
