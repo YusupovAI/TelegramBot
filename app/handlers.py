@@ -2,6 +2,8 @@ from app import bot, chatdb
 import requests
 import telebot
 import config
+from database import get_session
+from database.worker import get_article, get_last_urls, add_user
 
 
 @bot.message_handler(commands=['start'])
@@ -29,9 +31,9 @@ def formulate_text(article):
     
 authors: {authors}
 
-date: {date}'''.format(title=article['title'],
-                       authors=', '.join(article['authors']),
-                       date=article['date'])
+date: {date}'''.format(title=article.title,
+                       authors=article.authors,
+                       date=article.date)
 
 
 def create_keyboard():
@@ -46,17 +48,17 @@ def create_keyboard():
 
 
 def next_article(chat_id):
-    article = chatdb.get_article_for_user(chat_id)
-    if article is None:
-        bot.send_message(chat_id, text='Sorry, variants ended')
-    else:
-        bot.send_message(chat_id, text=formulate_text(article),
-                         reply_markup=create_keyboard())
+    with get_session() as session:
+        article = get_article(chat_id, session)
+        if article is None:
+            bot.send_message(chat_id, text='Sorry, variants ended')
+        else:
+            bot.send_message(chat_id, text=formulate_text(article),
+                             reply_markup=create_keyboard())
 
 
 @bot.message_handler(commands=['search'])
 def handle_search(message):
-    chatdb.del_user_articles(message.chat.id)
     query = ' '.join(message.text.split()[1:])
     response = requests.get(config.search_url.format(query=query),
                             params=config.params)
@@ -64,7 +66,8 @@ def handle_search(message):
     if response.json()['data'] is None:
         bot.send_message(chat_id, 'Sorry, nothing found')
     else:
-        chatdb.set_user_articles(chat_id, get_articles(response))
+        with get_session() as session:
+            add_user(chat_id, get_articles(response), session)
         next_article(chat_id)
 
 
@@ -74,8 +77,9 @@ def callback_worker(call):
         next_article(call.message.chat.id)
         bot.answer_callback_query(call.id)
     elif call.data == 'get':
+        with get_session() as session:
+            bot.send_message(call.message.chat.id,
+                             '{urls}'.format(
+                                 urls=get_last_urls(call.message.chat.id,
+                                                    session)))
         bot.answer_callback_query(call.id)
-        bot.send_message(call.message.chat.id,
-                         '{urls}'.format(
-                             urls='\n'.join(
-                                 chatdb.get_last_urls(call.message.chat.id))))
