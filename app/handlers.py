@@ -47,13 +47,14 @@ def create_keyboard():
     return keyboard
 
 
-def next_article(chat_id, session):
-    article = get_article(chat_id, session)
-    if article is None:
-        bot.send_message(chat_id, text='Sorry, variants ended')
-    else:
-        bot.send_message(chat_id, text=formulate_text(article),
-                         reply_markup=create_keyboard())
+def next_article(chat_id):
+    with get_session() as session:
+        article = get_article(chat_id, session)
+        if article is None:
+            bot.send_message(chat_id, text='Sorry, variants ended')
+        else:
+            bot.send_message(chat_id, text=formulate_text(article),
+                             reply_markup=create_keyboard())
 
 
 @bot.message_handler(commands=['search'])
@@ -67,18 +68,18 @@ def handle_search(message):
     else:
         with get_session() as session:
             add_user(chat_id, get_articles(response), session)
-            next_article(chat_id, session)
+        next_article(chat_id)
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
-    with get_session() as session:
-        if call.data == 'next':
-            next_article(call.message.chat.id, session)
-            bot.answer_callback_query(call.id)
-        elif call.data == 'get':
+    if call.data == 'next':
+        next_article(call.message.chat.id)
+        bot.answer_callback_query(call.id)
+    elif call.data == 'get':
+        with get_session() as session:
             bot.send_message(call.message.chat.id,
                              '{urls}'.format(
                                  urls=get_last_urls(call.message.chat.id,
                                                     session)))
-            bot.answer_callback_query(call.id)
+        bot.answer_callback_query(call.id)
