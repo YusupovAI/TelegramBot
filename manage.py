@@ -2,8 +2,8 @@ import os
 from app import bot
 from flask import Flask, request
 from config import bot_token
-from database import init_db
 import telebot
+from database import init_db
 
 server = Flask(__name__)
 

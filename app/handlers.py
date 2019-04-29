@@ -79,7 +79,6 @@ def callback_worker(call):
     elif call.data == 'get':
         with get_session() as session:
             bot.send_message(call.message.chat.id,
-                             '{urls}'.format(
-                                 urls=get_last_urls(call.message.chat.id,
-                                                    session)))
+                             get_last_urls(call.message.chat.id,
+                                           session))
         bot.answer_callback_query(call.id)
