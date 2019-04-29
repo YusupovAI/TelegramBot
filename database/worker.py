@@ -17,13 +17,13 @@ def add_user(chat_id, articles, session):
 
 
 def get_article(chat_id, session):
-    user = session.query(User).get(chat_id)
+    user = session.query(User).filter_by(User.id == chat_id)
     user.article_no += 1
     return session.query(Article).filter_by(
         Article.user_id == chat_id and Article.article_no == user.article_no)
 
 
 def get_last_urls(chat_id, session):
-    user = session.query(User).get(chat_id)
+    user = session.query(User).filter_by(User.id == chat_id)
     return session.query(Article.urls).filter_by(
         Article.user_id == chat_id and Article.article_no == user.article_no)
