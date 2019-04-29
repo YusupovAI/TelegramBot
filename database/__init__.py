@@ -38,6 +38,8 @@ class Article(Base):
         self.date = date
         self.urls = urls
 
+def init_db():
+    Base.metadata.create_all(engine)
 
 @contextmanager
 def get_session():

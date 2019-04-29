@@ -2,7 +2,7 @@ import os
 from app import bot
 from flask import Flask, request
 from config import bot_token
-
+from database import init_db
 import telebot
 
 server = Flask(__name__)
@@ -24,4 +24,5 @@ def webhook():
 
 
 if __name__ == "__main__":
+    init_db()
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
