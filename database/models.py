@@ -5,7 +5,7 @@ from database import Base
 class User(Base):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(String, primary_key=True)
     article_no = Column(Integer)
 
     def __init__(self, chat_id):
@@ -16,7 +16,7 @@ class User(Base):
 class Article(Base):
     __tablename__ = 'articles'
 
-    user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+    user_id = Column(String, ForeignKey('users.id'), primary_key=True)
     article_no = Column(Integer, primary_key=True)
     title = Column(String)
     authors = Column(String)
