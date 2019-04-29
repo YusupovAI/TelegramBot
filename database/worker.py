@@ -1,4 +1,4 @@
-from database.models import User, Article
+from database import User, Article
 
 
 def add_user(chat_id, articles, session):
