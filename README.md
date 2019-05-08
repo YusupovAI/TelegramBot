@@ -6,3 +6,5 @@ Use a `/search [query]` to find anything you want.
 # Configuring
 All parameters you will need to config lie in `config.py` file
 Just change it to configure your file.
+# Bot name
+You can interact with bot, he's working now. His name is @python_review_science_bot.
