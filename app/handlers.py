@@ -60,8 +60,8 @@ def next_article(chat_id):
 @bot.message_handler(commands=['search'])
 def handle_search(message):
     query = ' '.join(message.text.split()[1:])
-    response = requests.get(config.search_url.format(query=query),
-                            params=config.params)
+    response = requests.get(config.SEARCH_URL.format(query=query),
+                            params=config.PARAMS)
     chat_id = message.chat.id
     if response.json()['data'] is None:
         bot.send_message(chat_id, 'Sorry, nothing found')

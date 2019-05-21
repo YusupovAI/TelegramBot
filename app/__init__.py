@@ -1,6 +1,6 @@
 import telebot
-from config import bot_token
+from config import BOT_TOKEN
 
-bot = telebot.TeleBot(bot_token, threaded=True)
+bot = telebot.TeleBot(BOT_TOKEN, threaded=True)
 
 from app import handlers
