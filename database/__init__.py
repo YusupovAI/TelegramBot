@@ -2,14 +2,14 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
+from config import DB_NAME
 
-engine = create_engine('sqlite:///' + DB_NAME, echo=True)
+engine = create_engine('sqlite:///' + DB_NAME, echo=True, )
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 
 
 def init_db():
-    from config import DB_NAME
     from database.models import Article, User
     Base.metadata.create_all(engine)
 
