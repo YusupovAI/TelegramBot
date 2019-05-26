@@ -13,8 +13,16 @@ def handle_start(message):
                      'Just use /search <query> command to begin')
 
 
+@bot.message_handler(commands=['help'])
+def handle_help(message):
+    bot.send_message(message.chat.id,
+                     'This bot can search science articles. '
+                     'To do this send /search <query> command. '
+                     'After that you can choose which article you are interested in.')
+
+
 def get_articles(response):
-    l = []
+    publication_list = []
     for publication in response.json()['data']:
         source = publication['_source']
         result = dict()
@@ -22,8 +30,8 @@ def get_articles(response):
         result['date'] = source['datePublished']
         result['title'] = source['title']
         result['urls'] = source['urls']
-        l.append(result)
-    return l
+        publication_list.append(result)
+    return publication_list
 
 
 def formulate_text(article):
