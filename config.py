@@ -1,11 +1,14 @@
 from json import load
 
-BOT_TOKEN = None
-SEARCH_URL = None
-PARAMS = None
-PORT = None
-HOST = None
-DB_NAME = None
+BOT_TOKEN = '873276013:AAFoxZ7sdhU-mSpsB-Hjsz1XkNGUetuhWho'
+API_KEY = 'hDmv4CkWbO8TtXUrGaQBPfn2jqcAydMN'
+SEARCH_URL = 'https://core.ac.uk:443/api-v2/search/{query}'
+PARAMS = {
+    'apiKey': API_KEY, 'page': 1, 'pageSize': 100
+}
+PORT = 5000
+HOST = '0.0.0.0'
+DB_NAME = 'users.db'
 
 
 def init_config():
